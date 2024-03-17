@@ -1,4 +1,4 @@
-package com.supermarket.gateway.auth.config;
+package com.harmony.supermarketapigateway.auth.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

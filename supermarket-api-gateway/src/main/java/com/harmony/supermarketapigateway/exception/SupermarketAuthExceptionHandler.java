@@ -1,4 +1,4 @@
-package com.supermarket.gateway.auth.exception;
+package com.harmony.supermarketapigateway.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
