@@ -1,18 +1,15 @@
-package com.supermarket.gateway.auth.security;
+package com.harmony.supermarketapigateway.auth.security;
 
-import com.supermarket.gateway.auth.entity.Member;
-import com.supermarket.gateway.auth.exception.ErrorCode.AuthErrorCode;
-import com.supermarket.gateway.auth.exception.SupermarketAuthException;
-import com.supermarket.gateway.auth.repository.MemberRepository;
+import com.harmony.supermarketapigateway.auth.entity.Member;
+import com.harmony.supermarketapigateway.auth.repository.MemberRepository;
+import com.harmony.supermarketapigateway.exception.ErrorCode.AuthErrorCode;
+import com.harmony.supermarketapigateway.exception.SupermarketAuthException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 
 @RequiredArgsConstructor
 @Service
@@ -28,7 +25,7 @@ public class SupermarketUserDetailsService implements UserDetailsService {
                             AuthErrorCode.USER_NOT_FOUND.getCode(),
                             AuthErrorCode.USER_NOT_FOUND.getMessage()
                     ));
-            return new User(findMember.getMemberId(), findMember.getPassword(), new ArrayList<>());
+            return findMember.toUserDetails();
         } catch (SupermarketAuthException e) {
             log.error("Authentication error for memberId: {}. Error code: {}", memberId, e.getErrorCode());
             throw e;
