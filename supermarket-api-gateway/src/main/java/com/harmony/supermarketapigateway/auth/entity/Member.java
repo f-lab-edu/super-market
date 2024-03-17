@@ -1,4 +1,4 @@
-package com.supermarket.gateway.auth.entity;
+package com.harmony.supermarketapigateway.auth.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

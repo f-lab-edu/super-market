@@ -1,4 +1,4 @@
-package com.supermarket.gateway.auth.dto;
+package com.harmony.supermarketapigateway.auth.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;

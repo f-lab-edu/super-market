@@ -1,7 +1,7 @@
-package com.supermarket.gateway.auth.controller;
+package com.harmony.supermarketapigateway.auth.controller;
 
-import com.supermarket.gateway.auth.dto.MemberRegistrationRequestDTO;
-import com.supermarket.gateway.auth.service.MemberRegistrationService;
+import com.harmony.supermarketapigateway.auth.dto.MemberRegistrationRequestDTO;
+import com.harmony.supermarketapigateway.auth.service.MemberRegistrationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

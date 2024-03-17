@@ -1,10 +1,11 @@
-package com.supermarket.gateway.auth.service;
+package com.harmony.supermarketapigateway.auth.service;
 
-import com.supermarket.gateway.auth.dto.MemberRegistrationRequestDTO;
-import com.supermarket.gateway.auth.entity.Member;
-import com.supermarket.gateway.auth.repository.MemberRepository;
-import com.supermarket.gateway.auth.exception.ErrorCode.AuthErrorCode;
-import com.supermarket.gateway.auth.exception.SupermarketAuthException;
+
+import com.harmony.supermarketapigateway.auth.dto.MemberRegistrationRequestDTO;
+import com.harmony.supermarketapigateway.auth.entity.Member;
+import com.harmony.supermarketapigateway.auth.repository.MemberRepository;
+import com.harmony.supermarketapigateway.exception.ErrorCode.AuthErrorCode;
+import com.harmony.supermarketapigateway.exception.SupermarketAuthException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

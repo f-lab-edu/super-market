@@ -1,9 +1,9 @@
-package com.supermarket.gateway.auth.security;
+package com.harmony.supermarketapigateway.auth.security;
 
-import com.supermarket.gateway.auth.entity.Member;
-import com.supermarket.gateway.auth.exception.ErrorCode.AuthErrorCode;
-import com.supermarket.gateway.auth.exception.SupermarketAuthException;
-import com.supermarket.gateway.auth.repository.MemberRepository;
+import com.harmony.supermarketapigateway.auth.entity.Member;
+import com.harmony.supermarketapigateway.auth.repository.MemberRepository;
+import com.harmony.supermarketapigateway.exception.ErrorCode.AuthErrorCode;
+import com.harmony.supermarketapigateway.exception.SupermarketAuthException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.User;

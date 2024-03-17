@@ -1,4 +1,4 @@
-package com.supermarket.gateway.auth.exception.ErrorCode;
+package com.harmony.supermarketapigateway.exception.ErrorCode;
 import lombok.Getter;
 
 @Getter
