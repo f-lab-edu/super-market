@@ -1,13 +1,14 @@
-package com.supermarket.gateway.auth.entity;
+package com.harmony.supermarketapigateway.auth.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import org.springframework.security.core.userdetails.User;
+
+import java.util.ArrayList;
 
 @AllArgsConstructor
 @Entity
-@Getter
 public class Member {
     @Id
     private String memberId;
@@ -17,5 +18,9 @@ public class Member {
 
     public static Member createWithEncodedPassword(final String memberId, final String encodedPassword) {
         return new Member(memberId, encodedPassword);
+    }
+
+    public User toUserDetails(){
+        return new User(this.memberId, this.password, new ArrayList<>());
     }
 }
