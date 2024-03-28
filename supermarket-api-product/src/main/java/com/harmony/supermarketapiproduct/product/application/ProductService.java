@@ -21,6 +21,7 @@ import java.util.List;
 @Slf4j
 public class ProductService {
     private final ProductRepository productRepository;
+    private final long MAX_RETRY_ATTEMPTS = 3;
 
     @Transactional
     public List<ProductDto> decreaseStock(final List<StockDecreaseDto> stockDecreaseDtos) throws ObjectOptimisticLockingFailureException {
@@ -30,7 +31,7 @@ public class ProductService {
             boolean success = false;
             int attempts = 0;
 
-            while(!success) {
+            while(!success && attempts < MAX_RETRY_ATTEMPTS) {
                 try {
                     Product product = productRepository.findById(stockDecreaseDto.getProductId())
                             .orElseThrow(() -> {
@@ -44,7 +45,7 @@ public class ProductService {
                     success = true;
                 } catch (ObjectOptimisticLockingFailureException e){
                     attempts ++;
-                    if (attempts >= 3 ) {
+                    if (attempts >= MAX_RETRY_ATTEMPTS) {
                         log.error("Failed to decrease stock after " + attempts + " attempts for product ID " + stockDecreaseDto.getProductId(), e);
                         throw new ProductStockUpdateException();
                     }
