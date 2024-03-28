@@ -49,11 +49,6 @@ public class ProductService {
                         log.error("Failed to decrease stock after " + attempts + " attempts for product ID " + stockDecreaseDto.getProductId(), e);
                         throw new ProductStockUpdateException();
                     }
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException ie){
-                        Thread.currentThread().interrupt();
-                    }
                 }
             }
         }
