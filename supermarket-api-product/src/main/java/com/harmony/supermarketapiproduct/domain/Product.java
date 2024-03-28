@@ -1,6 +1,5 @@
 package com.harmony.supermarketapiproduct.domain;
 
-
 import com.harmony.supermarketapiproduct.application.dto.ProductDto;
 import com.harmony.supermarketapiproduct.common.exception.ProductInsufficientStockException;
 import com.harmony.supermarketapiproduct.common.exception.ProductQuantityNegativeException;
