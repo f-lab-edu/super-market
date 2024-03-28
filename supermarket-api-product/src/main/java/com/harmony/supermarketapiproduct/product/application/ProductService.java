@@ -24,7 +24,7 @@ public class ProductService {
     private final long MAX_RETRY_ATTEMPTS = 3;
 
     @Transactional
-    public List<ProductDto> decreaseStock(final List<StockDecreaseDto> stockDecreaseDtos) throws ObjectOptimisticLockingFailureException {
+    public List<ProductDto> decreaseStock(final List<StockDecreaseDto> stockDecreaseDtos) {
         List<ProductDto> productDtoList = new ArrayList<>();
 
         for (StockDecreaseDto stockDecreaseDto: stockDecreaseDtos){
