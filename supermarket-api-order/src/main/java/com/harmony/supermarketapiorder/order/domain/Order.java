@@ -3,7 +3,6 @@ package com.harmony.supermarketapiorder.order.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,25 +23,19 @@ public class Order {
     private String customerId;
     private LocalDateTime orderDate;
     private String status;
-    private BigDecimal totalPrice;
     private String deliveryAddress;
     private String deliveryMethod;
     private LocalDate expectedDeliveryDate;
     private String paymentMethod;
     private String specialRequest;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<OrderItem> items = new ArrayList<>();
 
     public void addItem(OrderItem item) {
         items.add(item);
-        item.setOrderId(this.orderId);
-    }
-
-    public void calculateTotalPrice() {
-        totalPrice = items.stream()
-                .map(OrderItem::getTotalPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        item.setOrder(this);
     }
 
     public static Order from(OrderRequest request) {
