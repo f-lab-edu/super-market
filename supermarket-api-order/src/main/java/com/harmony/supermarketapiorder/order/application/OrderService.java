@@ -1,12 +1,12 @@
 package com.harmony.supermarketapiorder.order.application;
 
-import com.harmony.supermarketapiorder.order.domain.*;
+import com.harmony.supermarketapiorder.order.domain.Order;
+import com.harmony.supermarketapiorder.order.domain.OrderItem;
+import com.harmony.supermarketapiorder.order.domain.OrderRepository;
+import com.harmony.supermarketapiorder.order.domain.OrderRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,12 +28,21 @@ public class OrderService {
     }
 
     // TODO 2. 특정 주문의 정보를 조회하는 기능
-    public void findOrderById(){
+    public OrderDto findOrderById(Long orderId){
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("주문을 찾을 수 없습니다."));
 
+        return new OrderDto(order.getOrderId(), order.getCustomerId(), order.getOrderDate(), order.getStatus(), order.getDeliveryAddress(), order.getDeliveryMethod(), order.getExpectedDeliveryDate(), order.getPaymentMethod(), order.getSpecialRequest());
     }
 
     // TODO 3. 주문을 취소하는 기능
-    public void cancelOrder(){
+    @Transactional
+    public void cancelOrder(Long orderId){
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("주문을 찾을 수 없습니다."));
+        
+        order.cancel();
+        orderRepository.save(order);
 
     }
 

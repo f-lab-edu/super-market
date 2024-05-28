@@ -57,13 +57,8 @@ public class Order {
     }
 
     // TODO 3. 주문 취소
-    public void cancelOrder() {
-
-    }
-
-    // TODO 4. 특정 주문 정보 조회
-    public void getOrderDetails() {
-
+    public void cancel() {
+        this.status = "cancelled";
     }
 
     private static void validateRequest(OrderRequest request) {
