@@ -1,10 +1,5 @@
 package com.harmony.supermarketapiorder.order.application;
 
-import com.harmony.supermarketapiorder.order.domain.Order;
-import com.harmony.supermarketapiorder.order.domain.OrderItem;
-import com.harmony.supermarketapiorder.order.domain.OrderRepository;
-import com.harmony.supermarketapiorder.order.domain.OrderRequest;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
