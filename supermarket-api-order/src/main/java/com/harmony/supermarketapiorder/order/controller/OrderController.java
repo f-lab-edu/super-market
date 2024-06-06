@@ -1,35 +1,35 @@
 package com.harmony.supermarketapiorder.order.controller;
 
 
+import com.harmony.supermarketapiorder.order.application.OrderCreateRequest;
+import com.harmony.supermarketapiorder.order.application.OrderService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/orders")
 @RequiredArgsConstructor
 @RestController
 public class OrderController {
+    private final OrderService orderService;
 
-    // TODO 1. 전달받은 상품 내역을 가지고 실제로 주문하는 기능
     @PostMapping
-    public void order(){
-
+    public ResponseEntity<Void> order(@RequestBody OrderCreateRequest orderCreateRequest){
+        orderService.createOrder(orderCreateRequest.toOrderRequest());
+        return ResponseEntity.ok().build();
     }
 
-
-    // TODO 2. 특정 주문의 정보를 조회하는 기능
     @GetMapping("/{orderId}")
-    public void getOrder(){
-
+    public ResponseEntity<Void> getOrder(@PathVariable Long orderId){
+        orderService.findOrderById(orderId);
+        return ResponseEntity.ok().build();
     }
 
-    // TODO 3. 주문을 취소하는 기능
     @DeleteMapping("/{orderId}")
-    public void cancelOrder(){
-
+    public ResponseEntity<Void> cancelOrder(@PathVariable Long orderId){
+        orderService.cancelOrder(orderId);
+        return ResponseEntity.ok().build();
     }
-
-
 }
