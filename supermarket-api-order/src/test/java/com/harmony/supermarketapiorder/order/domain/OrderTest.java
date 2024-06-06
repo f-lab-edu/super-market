@@ -22,9 +22,9 @@ class OrderTest {
             OrderRequest request = OrderRequest.builder()
                     .customerId("123456789")
                     .deliveryAddress("풍세로 801-23")
-                    .deliveryMethod("빛보다 빠른 배달")
+                    .deliveryMethod(DeliveryMethod.SUPER_FAST)
                     .expectedDeliveryDate(LocalDate.now().plusDays(2))
-                    .paymentMethod("card")
+                    .paymentMethod(PaymentMethod.PAYPAL)
                     .specialRequest("누구보다 빠르게 와주세요.")
                     .build();
 
@@ -34,10 +34,10 @@ class OrderTest {
             // then
             assertEquals("123456789", order.getCustomerId());
             assertEquals("풍세로 801-23", order.getDeliveryAddress());
-            assertEquals("빛보다 빠른 배달", order.getDeliveryMethod());
-            assertEquals("card", order.getPaymentMethod());
+            assertEquals(DeliveryMethod.SUPER_FAST, order.getDeliveryMethod());
+            assertEquals(PaymentMethod.PAYPAL, order.getPaymentMethod());
             assertEquals("누구보다 빠르게 와주세요.", order.getSpecialRequest());
-            assertEquals("pending", order.getStatus());
+            assertEquals(OrderStatus.PENDING, order.getStatus());
         }
 
         @DisplayName("고객 ID는 최대 10글자 까지 가능하다.")
@@ -47,9 +47,9 @@ class OrderTest {
             OrderRequest request = OrderRequest.builder()
                     .customerId("12345678901")  // 11자리 숫자, 유효하지 않음
                     .deliveryAddress("풍세로 801-23")
-                    .deliveryMethod("빛보다 빠른 배달")
+                    .deliveryMethod(DeliveryMethod.FAST)
                     .expectedDeliveryDate(LocalDate.now().plusDays(3))
-                    .paymentMethod("card")
+                    .paymentMethod(PaymentMethod.PAYPAL)
                     .specialRequest("누구보다 빠르게 와주세요.")
                     .build();
 
@@ -64,9 +64,9 @@ class OrderTest {
             OrderRequest request = OrderRequest.builder()
                     .customerId("")  // 11자리 숫자, 유효하지 않음
                     .deliveryAddress("풍세로 801-23")
-                    .deliveryMethod("빛보다 빠른 배달")
+                    .deliveryMethod(DeliveryMethod.FAST)
                     .expectedDeliveryDate(LocalDate.now().plusDays(3))
-                    .paymentMethod("card")
+                    .paymentMethod(PaymentMethod.PAYPAL)
                     .specialRequest("누구보다 빠르게 와주세요.")
                     .build();
 
@@ -83,9 +83,9 @@ class OrderTest {
             OrderRequest request = OrderRequest.builder()
                     .customerId("1234567890")
                     .deliveryAddress("풍세로 801-23")
-                    .deliveryMethod("빛보다 빠른 배달")
+                    .deliveryMethod(DeliveryMethod.NORMAL)
                     .expectedDeliveryDate(LocalDate.now().plusDays(8))  // 8일 경과시 정책 벗어남 유효하지 않음
-                    .paymentMethod("card")
+                    .paymentMethod(PaymentMethod.PAYPAL)
                     .specialRequest("누구보다 빠르게 와주세요.")
                     .build();
 
@@ -101,9 +101,9 @@ class OrderTest {
             OrderRequest request = OrderRequest.builder()
                     .customerId("1234567890")
                     .deliveryAddress("풍세로 801-23")
-                    .deliveryMethod("빛보다 빠른 배달")
+                    .deliveryMethod(DeliveryMethod.NORMAL)
                     .expectedDeliveryDate(LocalDate.now())  // 주문 당일은 배송 정책에 부합하지 않음
-                    .paymentMethod("card")
+                    .paymentMethod(PaymentMethod.PAYPAL)
                     .specialRequest("누구보다 빠르게 와주세요.")
                     .build();
 
@@ -130,9 +130,9 @@ class OrderTest {
             OrderRequest request = OrderRequest.builder()
                     .customerId("123456789")
                     .deliveryAddress(" ")  // 비어있는 배송 주소
-                    .deliveryMethod("빛보다 빠른 배달")
+                    .deliveryMethod(DeliveryMethod.NORMAL)
                     .expectedDeliveryDate(LocalDate.now().plusDays(2))
-                    .paymentMethod("card")
+                    .paymentMethod(PaymentMethod.PAYPAL)
                     .specialRequest("누구보다 빠르게 와주세요.")
                     .build();
 
@@ -148,9 +148,9 @@ class OrderTest {
             OrderRequest request = OrderRequest.builder()
                     .customerId("123456789")
                     .deliveryAddress("풍세로 801-23")
-                    .deliveryMethod(" ")
+                    .deliveryMethod(null)  // null인 배송 수단
                     .expectedDeliveryDate(LocalDate.now().plusDays(2))
-                    .paymentMethod("card")
+                    .paymentMethod(PaymentMethod.PAYPAL)
                     .specialRequest("누구보다 빠르게 와주세요.")
                     .build();
 
@@ -166,9 +166,9 @@ class OrderTest {
             OrderRequest request = OrderRequest.builder()
                     .customerId("123456789")
                     .deliveryAddress("풍세로 801-23")
-                    .deliveryMethod("빛보다 빠른 배달")
+                    .deliveryMethod(DeliveryMethod.NORMAL)
                     .expectedDeliveryDate(LocalDate.now().plusDays(2))
-                    .paymentMethod(" ")  // 비어있는 지불 수단
+                    .paymentMethod(null)  // 비어있는 지불 수단
                     .specialRequest("누구보다 빠르게 와주세요.")
                     .build();
 
