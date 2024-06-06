@@ -10,14 +10,14 @@ import java.util.List;
 public class OrderRequest {
     private String customerId;
     private String deliveryAddress;
-    private String deliveryMethod;
+    private DeliveryMethod deliveryMethod;
     private LocalDate expectedDeliveryDate;
-    private String paymentMethod;
+    private PaymentMethod paymentMethod;
     private String specialRequest;
     private List<OrderItemRequest> items;
 
     @Builder
-    public OrderRequest(String customerId, String deliveryAddress, String deliveryMethod, LocalDate expectedDeliveryDate, String paymentMethod, String specialRequest, List<OrderItemRequest> items) {
+    public OrderRequest(String customerId, String deliveryAddress, DeliveryMethod deliveryMethod, LocalDate expectedDeliveryDate, PaymentMethod paymentMethod, String specialRequest, List<OrderItemRequest> items) {
         this.customerId = customerId;
         this.deliveryAddress = deliveryAddress;
         this.deliveryMethod = deliveryMethod;

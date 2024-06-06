@@ -24,11 +24,14 @@ public class Order {
 
     private String customerId;
     private LocalDateTime orderDate;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
     private String deliveryAddress;
-    private String deliveryMethod;
+    @Enumerated(EnumType.STRING)
+    private DeliveryMethod deliveryMethod;
     private LocalDate expectedDeliveryDate;
-    private String paymentMethod;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
     private String specialRequest;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -48,7 +51,7 @@ public class Order {
         return Order.builder()
                 .customerId(request.getCustomerId())
                 .orderDate(LocalDateTime.now())
-                .status("pending")
+                .status(OrderStatus.PENDING)
                 .deliveryAddress(request.getDeliveryAddress())
                 .deliveryMethod(request.getDeliveryMethod())
                 .expectedDeliveryDate(request.getExpectedDeliveryDate())
@@ -59,7 +62,7 @@ public class Order {
 
     // TODO 3. 주문 취소
     public void cancel() {
-        this.status = "cancelled";
+        this.status = OrderStatus.CANCELLED;
     }
 
     private static void validateRequest(OrderRequest request) {
@@ -69,7 +72,7 @@ public class Order {
         if (StringUtils.isBlank(request.getCustomerId()) || !request.getCustomerId().matches("\\d{1,10}")) {
             throw new IllegalArgumentException("고객 ID는 1~10 사이의 정수형으로 구성되야 합니다.");
         }
-        if (StringUtils.isBlank(request.getDeliveryAddress()) || StringUtils.isBlank(request.getDeliveryMethod()) || StringUtils.isBlank(request.getPaymentMethod())) {
+        if (StringUtils.isBlank(request.getDeliveryAddress()) || request.getDeliveryMethod() == null || request.getPaymentMethod() == null) {
             throw new IllegalArgumentException("배송주소, 배송 수단, 지불 수단중에 비어있는 값이 있습니다.");
         }
         if (request.getExpectedDeliveryDate() == null || !request.getExpectedDeliveryDate().isAfter(LocalDate.now().plusDays(1)) || !request.getExpectedDeliveryDate().isBefore(LocalDate.now().plusDays(7))) {
