@@ -28,7 +28,7 @@ public class OrderService {
 
     // TODO 1. 주문 정보 저장
     @Transactional
-    public Order createOrder(OrderRequest request) {
+    public OrderDto createOrder(OrderRequest request) {
         // TODO 1. 각 요청 실패시 처리 구현 필요
 
         // restTemplate.postForObject(productServiceUrl, request, Void.class); // TODO. 각 서비스 호출을 위한 DTO로 변경
@@ -43,14 +43,14 @@ public class OrderService {
 
         // TODO. 레빗 엠큐를 이용한 배송 등록 처리
 
-        return orderRepository.save(order);
+        return OrderDto.from(order);
     }
 
     public OrderDto findOrderById(Long orderId){
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("주문을 찾을 수 없습니다."));
 
-        return new OrderDto(order.getOrderId(), order.getCustomerId(), order.getOrderDate(), order.getStatus(), order.getDeliveryAddress(), order.getDeliveryMethod(), order.getExpectedDeliveryDate(), order.getPaymentMethod(), order.getSpecialRequest());
+        return OrderDto.from(order);
     }
 
     @Transactional
