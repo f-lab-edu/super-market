@@ -1,13 +1,12 @@
 package com.harmony.supermarketapiorder.order.application;
 
-import com.harmony.supermarketapiorder.order.domain.Order;
-import com.harmony.supermarketapiorder.order.domain.OrderItemRequest;
-import com.harmony.supermarketapiorder.order.domain.OrderRepository;
-import com.harmony.supermarketapiorder.order.domain.OrderRequest;
+import com.harmony.supermarketapiorder.order.domain.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -26,6 +25,9 @@ class OrderServiceIntegrationTest {
     @Autowired
     private OrderRepository orderRepository;
 
+    @MockBean
+    private RestTemplate restTemplate;
+
     @DisplayName("주문 생성 성공 통합 테스트")
     @Test
     void test1() {
@@ -36,9 +38,9 @@ class OrderServiceIntegrationTest {
         OrderRequest request = OrderRequest.builder()
                 .customerId("123456789")
                 .deliveryAddress("풍세로 801-23")
-                .deliveryMethod("로켓배송")
+                .deliveryMethod(DeliveryMethod.NORMAL)
                 .expectedDeliveryDate(LocalDate.now().plusDays(5))
-                .paymentMethod("신용카드")
+                .paymentMethod(PaymentMethod.CREDIT_CARD)
                 .specialRequest("내일 아침에 일찍 일어나야 해서 6시에 도착하셔서 벨 눌러주세요.")
                 .items(items)
                 .build();
@@ -53,8 +55,8 @@ class OrderServiceIntegrationTest {
         assertEquals(initialCount + 1, orderRepository.findAll().size());
         assertEquals("123456789", order.getCustomerId());
         assertEquals("풍세로 801-23", order.getDeliveryAddress());
-        assertEquals("로켓배송", order.getDeliveryMethod());
-        assertEquals("신용카드", order.getPaymentMethod());
+        assertEquals(DeliveryMethod.NORMAL, order.getDeliveryMethod());
+        assertEquals(PaymentMethod.CREDIT_CARD, order.getPaymentMethod());
         assertEquals("내일 아침에 일찍 일어나야 해서 6시에 도착하셔서 벨 눌러주세요.", order.getSpecialRequest());
         assertEquals(1L, order.getItems().size());
 
@@ -67,9 +69,9 @@ class OrderServiceIntegrationTest {
         OrderRequest request = OrderRequest.builder()
                 .customerId("12345")
                 .deliveryAddress("서울시 강남구")
-                .deliveryMethod("표준 배송")
+                .deliveryMethod(DeliveryMethod.FAST)
                 .expectedDeliveryDate(LocalDate.now().plusDays(3))
-                .paymentMethod("현금")
+                .paymentMethod(PaymentMethod.CREDIT_CARD)
                 .items(new ArrayList<>())  // 빈 아이템 리스트
                 .build();
 
@@ -90,9 +92,9 @@ class OrderServiceIntegrationTest {
         OrderRequest request = OrderRequest.builder()
                 .customerId("67890")
                 .deliveryAddress("서울시 마포구")
-                .deliveryMethod("익일 배송")
+                .deliveryMethod(DeliveryMethod.SUPER_FAST)
                 .expectedDeliveryDate(LocalDate.now().plusDays(1))
-                .paymentMethod("카드")
+                .paymentMethod(PaymentMethod.DEBIT_CARD)
                 .items(items)
                 .build();
 
