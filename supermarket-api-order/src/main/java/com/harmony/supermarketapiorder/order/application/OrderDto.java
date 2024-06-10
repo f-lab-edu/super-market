@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
-@AllArgsConstructor
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class OrderDto {
@@ -27,17 +26,16 @@ public class OrderDto {
     private PaymentMethod paymentMethod;
     private String specialRequest;
 
-    public static OrderDto from(Order order) {
-        return new OrderDto(
-                order.getOrderId(),
-                order.getCustomerId(),
-                order.getOrderDate(),
-                order.getStatus(),
-                order.getDeliveryAddress(),
-                order.getDeliveryMethod(),
-                order.getExpectedDeliveryDate(),
-                order.getPaymentMethod(),
-                order.getSpecialRequest()
-        );
+    public OrderDto(Order order){
+        this.orderId = order.getOrderId();
+        this.customerId = order.getCustomerId();
+        this.orderDate = order.getOrderDate();
+        this.status = order.getStatus();
+        this.deliveryAddress = order.getDeliveryAddress();
+        this.deliveryMethod = order.getDeliveryMethod();
+        this.expectedDeliveryDate = order.getExpectedDeliveryDate();
+        this.paymentMethod = order.getPaymentMethod();
+        this.specialRequest = order.getSpecialRequest();
     }
+
 }

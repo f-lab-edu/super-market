@@ -15,16 +15,8 @@ import org.springframework.web.client.RestTemplate;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final RestTemplate restTemplate;
+    // private final RestTemplate restTemplate; // 별도 모듈 관련 도커 환경 구축 이후 활성화 계획
 
-    @Value("${external-api.product-service}")
-    private String productServiceUrl;
-
-    @Value("${external-api.payment-service}")
-    private String paymentServiceUrl;
-
-    @Value("${external-api.delivery-service}")
-    private String deliveryServiceUrl;
 
     // TODO 1. 주문 정보 저장
     @Transactional
@@ -35,15 +27,17 @@ public class OrderService {
         // restTemplate.postForObject(paymentServiceUrl, request, Void.class); // TODO. 공통 모듈을 통한 응답 처리
 
         validateOrderRequest(request);
-        Order order = Order.from(request);
+        Order newOrder = new Order(request);
 
         request.getItems().stream()
                 .map(OrderItem::from)
-                .forEach(order::addItem);
+                .forEach(newOrder::addItem);
 
-        // TODO. 레빗 엠큐를 이용한 배송 등록 처리
+        Order createdOrder = orderRepository.save(newOrder);
 
-        return OrderDto.from(order);
+        // TODO. 레빗 엠큐를 이용한 배송 등록 요청
+
+        return new OrderDto(createdOrder);
 
     }
 
@@ -51,7 +45,7 @@ public class OrderService {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("주문을 찾을 수 없습니다."));
 
-        return OrderDto.from(order);
+        return new OrderDto(order);
     }
 
     @Transactional
