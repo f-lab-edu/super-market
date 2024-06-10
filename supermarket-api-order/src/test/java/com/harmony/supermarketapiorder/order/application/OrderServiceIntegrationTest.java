@@ -25,8 +25,6 @@ class OrderServiceIntegrationTest {
     @Autowired
     private OrderRepository orderRepository;
 
-    @MockBean
-    private RestTemplate restTemplate;
 
     @DisplayName("주문 생성 성공 통합 테스트")
     @Test
