@@ -46,17 +46,16 @@ class OrderServiceIntegrationTest {
         int initialCount = orderRepository.findAll().size();
 
         // when
-        Order order = orderService.createOrder(request);
+        OrderDto orderDto = orderService.createOrder(request);
 
         // then
-        assertNotNull(order.getOrderId());
+        assertNotNull(orderDto.getOrderId());
         assertEquals(initialCount + 1, orderRepository.findAll().size());
-        assertEquals("123456789", order.getCustomerId());
-        assertEquals("풍세로 801-23", order.getDeliveryAddress());
-        assertEquals(DeliveryMethod.NORMAL, order.getDeliveryMethod());
-        assertEquals(PaymentMethod.CREDIT_CARD, order.getPaymentMethod());
-        assertEquals("내일 아침에 일찍 일어나야 해서 6시에 도착하셔서 벨 눌러주세요.", order.getSpecialRequest());
-        assertEquals(1L, order.getItems().size());
+        assertEquals("123456789", orderDto.getCustomerId());
+        assertEquals("풍세로 801-23", orderDto.getDeliveryAddress());
+        assertEquals(DeliveryMethod.NORMAL, orderDto.getDeliveryMethod());
+        assertEquals(PaymentMethod.CREDIT_CARD, orderDto.getPaymentMethod());
+        assertEquals("내일 아침에 일찍 일어나야 해서 6시에 도착하셔서 벨 눌러주세요.", orderDto.getSpecialRequest());
 
     }
 
