@@ -111,5 +111,28 @@ class OrderServiceIntegrationTest {
         assertTrue(exception.getMessage().contains("request는 null이 될 수 없습니다."));
     }
 
+    @DisplayName("주문 취소 성공 테스트")
+    @Test
+    void test5() {
+        // given
+        List<OrderItemRequest> items = new ArrayList<>();
+        items.add(new OrderItemRequest(1L, new BigDecimal("19.99"), 2));
+
+        OrderRequest request = OrderRequest.builder()
+                .customerId("67890")
+                .deliveryAddress("서울시 마포구")
+                .deliveryMethod(DeliveryMethod.SUPER_FAST)
+                .expectedDeliveryDate(LocalDate.now().plusDays(2))
+                .paymentMethod(PaymentMethod.DEBIT_CARD)
+                .items(items)
+                .build();
+
+        // when & then
+        OrderDto createdOrder = orderService.createOrder(request);
+        orderService.cancelOrder(createdOrder.getOrderId());
+        orderService.findOrderById(createdOrder.getOrderId());
+
+        assertEquals(OrderStatus.CANCELLED, orderRepository.findById(createdOrder.getOrderId()).get().getStatus());
+    }
 
 }
