@@ -15,18 +15,18 @@ import java.time.LocalDateTime;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class OrderDto {
-    private Long orderId;
-    private String customerId;
-    private LocalDateTime orderDate;
-    private OrderStatus status;
-    private String deliveryAddress;
-    private DeliveryMethod deliveryMethod;
-    private LocalDate expectedDeliveryDate;
-    private PaymentMethod paymentMethod;
-    private String specialRequest;
+public class OrderSuccessDto extends OrderResponseDto {
+    Long orderId;
+    String customerId;
+    LocalDateTime orderDate;
+    OrderStatus status;
+    String deliveryAddress;
+    DeliveryMethod deliveryMethod;
+    LocalDate expectedDeliveryDate;
+    PaymentMethod paymentMethod;
+    String specialRequest;
 
-    public OrderDto(Order order){
+    public OrderSuccessDto(Order order){
         this.orderId = order.getOrderId();
         this.customerId = order.getCustomerId();
         this.orderDate = order.getOrderDate();
@@ -36,6 +36,7 @@ public class OrderDto {
         this.expectedDeliveryDate = order.getExpectedDeliveryDate();
         this.paymentMethod = order.getPaymentMethod();
         this.specialRequest = order.getSpecialRequest();
+        super.setOrderResponseType(OrderResponseType.SUCCESS);
     }
 
 }
