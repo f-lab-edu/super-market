@@ -29,7 +29,7 @@ class OrderTest {
                     .build();
 
             // when
-            Order order = Order.from(request);
+            Order order = new Order(request);
 
             // then
             assertEquals("123456789", order.getCustomerId());
@@ -54,7 +54,7 @@ class OrderTest {
                     .build();
 
             // when & then
-            Exception exception = assertThrows(IllegalArgumentException.class, () -> Order.from(request));
+            Exception exception = assertThrows(IllegalArgumentException.class, () -> new Order(request));
             assertTrue(exception.getMessage().contains("고객 ID는 1~10 사이의 정수형으로 구성되야 합니다."));
         }
         @DisplayName("고객 ID는 최소 한글자 이상이어야 한다.")
@@ -71,7 +71,7 @@ class OrderTest {
                     .build();
 
             // when & then
-            Exception exception = assertThrows(IllegalArgumentException.class, () -> Order.from(request));
+            Exception exception = assertThrows(IllegalArgumentException.class, () -> new Order(request));
             assertTrue(exception.getMessage().contains("고객 ID는 1~10 사이의 정수형으로 구성되야 합니다."));
         }
 
@@ -90,7 +90,7 @@ class OrderTest {
                     .build();
 
             // when & then
-            Exception exception = assertThrows(IllegalArgumentException.class, () -> Order.from(request));
+            Exception exception = assertThrows(IllegalArgumentException.class, () -> new Order(request));
             assertTrue(exception.getMessage().contains("예상 배송일은 배송 요청 당일로부터 최소 1일에서 7일 사이로 입력되야 합니다."));
         }
 
@@ -108,7 +108,7 @@ class OrderTest {
                     .build();
 
             // when & then
-            Exception exception = assertThrows(IllegalArgumentException.class, () -> Order.from(request));
+            Exception exception = assertThrows(IllegalArgumentException.class, () -> new Order(request));
             assertTrue(exception.getMessage().contains("예상 배송일은 배송 요청 당일로부터 최소 1일에서 7일 사이로 입력되야 합니다."));
         }
 
@@ -119,7 +119,7 @@ class OrderTest {
             OrderRequest request = null;
 
             // when & then
-            Exception exception = assertThrows(IllegalArgumentException.class, () -> Order.from(request));
+            Exception exception = assertThrows(IllegalArgumentException.class, () -> new Order(request));
             assertTrue(exception.getMessage().contains("주문 요청이 빈 상태로 넘어왔습니다."));
         }
 
@@ -137,7 +137,7 @@ class OrderTest {
                     .build();
 
             // when & then
-            Exception exception = assertThrows(IllegalArgumentException.class, () -> Order.from(request));
+            Exception exception = assertThrows(IllegalArgumentException.class, () -> new Order(request));
             assertTrue(exception.getMessage().contains("배송주소, 배송 수단, 지불 수단중에 비어있는 값이 있습니다."));
         }
 
@@ -155,7 +155,7 @@ class OrderTest {
                     .build();
 
             // when & then
-            Exception exception = assertThrows(IllegalArgumentException.class, () -> Order.from(request));
+            Exception exception = assertThrows(IllegalArgumentException.class, () -> new Order(request));
             assertTrue(exception.getMessage().contains("배송주소, 배송 수단, 지불 수단중에 비어있는 값이 있습니다."));
         }
 
@@ -173,7 +173,7 @@ class OrderTest {
                     .build();
 
             // when & then
-            Exception exception = assertThrows(IllegalArgumentException.class, () -> Order.from(request));
+            Exception exception = assertThrows(IllegalArgumentException.class, () -> new Order(request));
             assertTrue(exception.getMessage().contains("배송주소, 배송 수단, 지불 수단중에 비어있는 값이 있습니다."));
         }
     }

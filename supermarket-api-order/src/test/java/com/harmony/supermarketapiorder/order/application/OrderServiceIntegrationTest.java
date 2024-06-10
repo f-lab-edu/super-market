@@ -100,5 +100,16 @@ class OrderServiceIntegrationTest {
         assertTrue(exception.getMessage().contains("주문을 위한 상품 목록은 10개를 초과할 수 없습니다."));
     }
 
+    @DisplayName("주문 생성 실패 테스트 - 주문 요청이 빈 상태인 경우")
+    @Test
+    void test4() {
+        //given
+        OrderRequest request = null;
+
+        // when & then
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> orderService.createOrder(request));
+        assertTrue(exception.getMessage().contains("request는 null이 될 수 없습니다."));
+    }
+
 
 }
