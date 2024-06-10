@@ -35,29 +35,26 @@ public class Order {
     private String specialRequest;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
     private List<OrderItem> items = new ArrayList<>();
 
     public static final int MAX_ITEMS = 10;
 
+    public Order (OrderRequest request) {
+        validateRequest(request);
+
+        this.customerId = request.getCustomerId();
+        this.orderDate = LocalDateTime.now();
+        this.status = OrderStatus.PENDING;
+        this.deliveryAddress = request.getDeliveryAddress();
+        this.deliveryMethod = request.getDeliveryMethod();
+        this.expectedDeliveryDate = request.getExpectedDeliveryDate();
+        this.paymentMethod = request.getPaymentMethod();
+        this.specialRequest = request.getSpecialRequest();
+    }
+
     public void addItem(OrderItem item) {
         items.add(item);
         item.setOrder(this);
-    }
-
-    public static Order from(OrderRequest request) {
-        validateRequest(request);
-
-        return Order.builder()
-                .customerId(request.getCustomerId())
-                .orderDate(LocalDateTime.now())
-                .status(OrderStatus.PENDING)
-                .deliveryAddress(request.getDeliveryAddress())
-                .deliveryMethod(request.getDeliveryMethod())
-                .expectedDeliveryDate(request.getExpectedDeliveryDate())
-                .paymentMethod(request.getPaymentMethod())
-                .specialRequest(request.getSpecialRequest())
-                .build();
     }
 
     // TODO 3. 주문 취소
