@@ -20,6 +20,8 @@ public class OrderCreateRequest {
     private String specialRequest;
     private List<OrderItemRequest> items;
 
+    OrderCreateRequest() {}
+
     @Builder
     public OrderCreateRequest(String customerId, String deliveryAddress, String deliveryMethod, LocalDate expectedDeliveryDate, String paymentMethod, String specialRequest, List<OrderItemRequest> items) {
         this.customerId = customerId;

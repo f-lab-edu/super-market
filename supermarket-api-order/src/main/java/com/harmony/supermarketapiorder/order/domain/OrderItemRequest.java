@@ -11,4 +11,6 @@ public class OrderItemRequest {
     private Long productId;
     private BigDecimal price;
     private int quantity;
+
+    public OrderItemRequest() {}
 }
