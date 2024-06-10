@@ -2,7 +2,8 @@ package com.harmony.supermarketapiorder.order.controller;
 
 
 import com.harmony.supermarketapiorder.order.application.OrderCreateRequest;
-import com.harmony.supermarketapiorder.order.application.OrderDto;
+import com.harmony.supermarketapiorder.order.application.OrderResponseDto;
+import com.harmony.supermarketapiorder.order.application.OrderSuccessDto;
 import com.harmony.supermarketapiorder.order.application.OrderService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +18,14 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<OrderDto> order(@RequestBody OrderCreateRequest orderCreateRequest){
-        OrderDto response = orderService.createOrder(orderCreateRequest.toOrderRequest());
+    public ResponseEntity<OrderResponseDto> order(@RequestBody OrderCreateRequest orderCreateRequest){
+        OrderResponseDto response = orderService.createOrder(orderCreateRequest.toOrderRequest());
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<OrderDto> getOrder(@PathVariable Long orderId){
-        OrderDto response = orderService.findOrderById(orderId);
+    public ResponseEntity<OrderResponseDto> getOrder(@PathVariable Long orderId){
+        OrderResponseDto response = orderService.findOrderById(orderId);
         return ResponseEntity.ok(response);
     }
 
