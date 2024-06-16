@@ -1,4 +1,4 @@
-rootProject.name = 'supermarket-api-order'
+rootProject.name = 'supermarket-api-payment'
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
